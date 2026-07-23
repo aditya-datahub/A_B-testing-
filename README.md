@@ -1,12 +1,14 @@
-# Facebook vs AdWords — A/B Testing Analysis
+# Media Spend ROI Analysis — Facebook vs Google Ads
 
-A data-driven analysis of two advertising campaigns (Facebook & AdWords) to determine which platform delivers better ROI in terms of clicks, conversions, and cost-effectiveness.
+A data-driven analysis of two advertising campaigns (Facebook & Google Ads) to determine which platform delivers better ROI in terms of clicks, conversions, and cost-effectiveness.
+
+> **Note:** The dataset uses the legacy name "AdWords" (Google rebranded AdWords to Google Ads in 2018). The analysis and findings apply directly to Google Ads.
 
 ---
 
 ## Business Problem
 
-A marketing agency needs to decide where to allocate its advertising budget — **Facebook Ads** or **Google AdWords**. Using 365 days of campaign data from 2019, this project identifies the more effective platform through statistical analysis and machine learning.
+A marketing agency needs to decide where to allocate its advertising budget — **Facebook Ads** or **Google Ads**. Using 365 days of campaign data from 2019, this project identifies the more effective platform through statistical analysis and machine learning.
 
 > **Research Question:** Which ad platform is more effective in terms of conversions, clicks, and overall cost-effectiveness?
 
@@ -53,7 +55,7 @@ Distribution of Facebook Ad Clicks and Conversions — both show a roughly symme
 
 ### 2. Conversion Category Comparison
 
-Facebook dominates in higher conversion ranges (10–15 and 15+), while AdWords stays stuck in the lower ranges (less than 6 and 6–10).
+Facebook dominates in higher conversion ranges (10–15 and 15+), while Google Ads stays stuck in the lower ranges (less than 6 and 6–10).
 
 ![Conversion Categories](images/conversion_categories.png)
 
@@ -61,7 +63,7 @@ Facebook dominates in higher conversion ranges (10–15 and 15+), while AdWords 
 
 ### 3. Correlation Analysis — Do clicks lead to conversions?
 
-Facebook shows a strong upward trend (r = 0.87). AdWords is much more scattered (r = 0.45), meaning clicks don't reliably lead to conversions.
+Facebook shows a strong upward trend (r = 0.87). Google Ads is much more scattered (r = 0.45), meaning clicks don't reliably lead to conversions.
 
 ![Scatter Plot](images/scatter_clicks_conversions.png)
 
@@ -92,12 +94,22 @@ Predicting Facebook conversions from clicks — the best fit line confirms a str
 
 ---
 
-## Hypothesis Testing (Welch's T-Test)
+### 6. Ad Spend vs Conversions — Long-Term Relationship (Cointegration)
 
-- **H0:** No difference in conversions between Facebook and AdWords
-- **H1:** Facebook generates more conversions than AdWords
+Beyond short-term correlation, an Engle-Granger cointegration test was run on daily ad spend and conversions to check whether the two series move together in a stable, long-run relationship rather than by coincidence.
 
-| Metric | Facebook | AdWords |
+- **Test:** Cointegration test (`statsmodels.tsa.stattools.coint`)
+- **Result:** p-value < 0.05 → **null hypothesis rejected**
+- **Interpretation:** Ad spend and conversions share a long-term equilibrium relationship — meaning budget changes have a stable, proportional impact on conversions over time, not just a short-term spike.
+
+---
+
+## Hypothesis Testing (Welch's T-Test, One-Tailed)
+
+- **H0:** μ_Facebook ≤ μ_Google Ads (no difference, or Google Ads performs at least as well)
+- **H1:** μ_Facebook > μ_Google Ads (Facebook generates more conversions)
+
+| Metric | Facebook | Google Ads |
 |---|---|---|
 | Mean Conversions/day | 11.74 | 5.98 |
 | T-Statistic | 32.88 | — |
@@ -110,24 +122,25 @@ Predicting Facebook conversions from clicks — the best fit line confirms a str
 
 ## Key Findings
 
-- Facebook generates **~2x more conversions** per day than AdWords
-- Facebook clicks are a **strong predictor** of conversions (r = 0.87)
-- The difference is **statistically significant** — not due to random chance
-- **May & November** are the most cost-effective months to run Facebook Ads
-- Ad spend and conversions have a **long-term equilibrium** relationship (Cointegration confirmed)
+- Facebook generates **~2x more conversions** per day than Google Ads (11.74 vs 5.98)
+- Facebook clicks are a **strong predictor** of conversions (r = 0.87) vs Google Ads (r = 0.45)
+- The conversion gap is **statistically significant** — confirmed via one-tailed Welch's t-test, not due to random chance
+- Ad spend and conversions share a **long-term equilibrium relationship** — confirmed via cointegration test
+- **May & November** are the most cost-effective months to run Facebook Ads; **February** is the most expensive
+- **Monday & Tuesday** consistently see the highest conversions during the week
 
 ---
 
 ## Recommendation
 
-> Allocate the majority of the advertising budget to **Facebook Ads**, particularly on **Mondays and Tuesdays** during **May and November** for maximum ROI.
+> Allocate the majority of the advertising budget to **Facebook Ads**, particularly on **Mondays and Tuesdays** during **May and November**, for maximum ROI.
 
 ---
 
 ## Project Structure
 
 ```
-facebook-vs-adwords-ab-test/
+media-spend-roi-facebook-vs-google-ads/
 │
 ├── facebook_vs_adwords_ab_analysis.ipynb   # Main analysis notebook
 ├── marketing_campaign.csv                  # Dataset
@@ -161,4 +174,4 @@ jupyter notebook facebook_vs_adwords_ab_analysis.ipynb
 
 ## Connect
 
-**Aditya Sharma** — [GitHub](https://github.com/aditya-datahub) · [LinkedIn](https://linkedin.com/in/)
+**Aditya Sharma** — [GitHub](https://github.com/aditya-datahub) · [LinkedIn](https://www.linkedin.com/in/aditya-sharma-data-analyst/)
