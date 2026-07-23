@@ -99,7 +99,7 @@ Predicting Facebook conversions from clicks — the best fit line confirms a str
 Beyond short-term correlation, an Engle-Granger cointegration test was run on daily ad spend and conversions to check whether the two series move together in a stable, long-run relationship rather than by coincidence.
 
 - **Test:** Cointegration test (`statsmodels.tsa.stattools.coint`)
-- **Result:** p-value < 0.05 → **null hypothesis rejected**
+- **Result:** Score = -14.76, p-value = 2.13e-26 → **null hypothesis rejected**
 - **Interpretation:** Ad spend and conversions share a long-term equilibrium relationship — meaning budget changes have a stable, proportional impact on conversions over time, not just a short-term spike.
 
 ---
